@@ -51,7 +51,8 @@ projectButton.addEventListener('click', e =>{
 }) 
 
 
-projectContainer.addEventListener('click', deleteOrCheck)
+projectContainer.addEventListener('click', deleteItem);
+projectContainer.addEventListener('click', toggleItem);
 
 // function createProjectList (name) {
 //     return {id: Date.now().toString(), name: name, todos: [], complete: false}
@@ -127,35 +128,7 @@ function addProject(){
             todoInput.value = ""    
             }
 
-    }) 
-    function addTodo(){
-
-
-        const todoDiv = document.createElement("ul")
-        todoDiv.classList.add("todo-div")
-    
-        const todoItem = document.createElement("li")
-        todoItem.classList.add("todo-item")
-        todoItem.innerText = todoInput.value;
-        todoDiv.appendChild(todoItem)
-        
-        const completedButton = document.createElement("button")
-        completedButton.innerHTML = '<i class="far fa-check-square"></i>'
-        completedButton.classList.add("complete-btn")
-        todoDiv.appendChild(completedButton)
-    
-        const deleteButton = document.createElement("button")
-        deleteButton.innerHTML = '<i class="far fa-trash-alt"></i>'
-        deleteButton.classList.add("delete-btn")
-        todoDiv.appendChild(deleteButton)
-    
-        newProject.appendChild(todoDiv)
-        
-        todoInput.value =""
-    
-       
-    }
-// })
+    });
 }
 
 function addTodo(){
@@ -193,23 +166,19 @@ function clearProject(e){
     }
 }
 
-function deleteOrCheck(e){
-    const item = e.target
+function deleteItem(e){
+    const item = e.target;
+    let todo;
 
     if (item.classList[0] === 'delete-btn') {
-        const todo = item.parentElement
-        todo.remove()
+        todo = item.parentElement;
+    } else if (item.classList[0] === 'p-delete-btn') {
+        todo = item.parentElement.parentElement;
     }
-
-    if (item.classList[0] === 'p-delete-btn') {
-        const todo = item.parentElement.parentElement
-        todo.remove()
-    }
-    if(item.classList[0] === 'complete-btn'){
-        const todo = item.parentElement
-        todo.classList.toggle('completed')
-    }
+    todo.remove();
 }
 
-
-
+function toggleItem(e) {
+    const item = e.target;
+    todo.classList.toggle('completed');
+}
